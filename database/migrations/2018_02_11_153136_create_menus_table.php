@@ -20,7 +20,7 @@ class CreateMenusTable extends Migration
             $table->integer('price');
             $table->string('image')->nullable();
             $table->boolean('stockable');
-            $table->boolean('available');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

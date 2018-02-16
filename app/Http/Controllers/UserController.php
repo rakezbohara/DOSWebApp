@@ -33,6 +33,6 @@ class UserController extends Controller
         $user->address = $input['address'];
         $user->phone = $input['phone'];
         $user->save();
-        redirect()->route('user.index');
-    }
+        $users = User::where('role','!=','admin')->get();
+        return view('users.users',compact('users'));    }
 }

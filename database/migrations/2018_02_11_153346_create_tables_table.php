@@ -17,8 +17,8 @@ class CreateTablesTable extends Migration
             $table->increments('id');
             $table->integer('table_no');
             $table->string('table_name',20);
-            $table->enum('status',['FREE','BUSY','WAITING']);
-            $table->boolean('available');
+            $table->enum('mode',['FREE','BUSY','WAITING']);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
