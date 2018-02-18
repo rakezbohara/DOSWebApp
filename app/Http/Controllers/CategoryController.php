@@ -14,19 +14,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view('category.index',compact('categories'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +25,24 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|min:3|max:20',
+            'type' => 'required',
+            'status' => 'required',
+        ]);
+        $input = $request->all();
+        $status = false;
+        if($input['status'] == 'Enable'){
+            $status = true;
+        }
+        $category = new Category();
+        $category->name = $input['name'];
+        $category->description = $input['description'];
+        $category->type = $input['type'];
+        $category->status = $status;
+        $category->save();
+        return redirect()->route('category.index')
+            ->with('success','New Category Created successfully');
     }
 
     /**
@@ -44,20 +51,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function edit($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
+        $category = Category::findOrFail($id);
+        return view('category.edit', compact('category'));
     }
 
     /**
@@ -67,9 +64,26 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|min:3|max:20',
+            'type' => 'required',
+            'status' => 'required',
+        ]);
+        $input = $request->all();
+        $status = false;
+        if($input['status'] == 'Enable'){
+            $status = true;
+        }
+        $category = Category::find($id);
+        $category->name = $input['name'];
+        $category->description = $input['description'];
+        $category->type = $input['type'];
+        $category->status = $status;
+        $category->save();
+        return redirect()->route('category.index')
+            ->with('success','Category Updated successfully');
     }
 
     /**
