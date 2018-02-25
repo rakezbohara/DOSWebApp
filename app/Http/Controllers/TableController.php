@@ -14,7 +14,13 @@ class TableController extends Controller
      */
     public function index()
     {
-        //
+        $tables = Table::all();
+        if(sizeof($tables) == 0){
+            $tableNo = 1;
+        }else{
+            $tableNo = $tables[sizeof($tables)-1]->table_no + 1;
+        }
+        return view('table.index', compact('tables'))->with('tableNo', $tableNo);
     }
 
     /**
@@ -35,7 +41,25 @@ class TableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'table_no' => 'required|numeric|unique:tables,table_no',
+            'name' => 'required',
+            'mode' => 'required',
+            'status' => 'required'
+        ]);
+        $input = $request->all();
+        $status = false;
+        if($input['status'] == 'Enable'){
+            $status = true;
+        }
+        $table = new Table();
+        $table->table_no = $input['table_no'];
+        $table->table_name = $input['name'];
+        $table->mode = $input['mode'];
+        $table->status = $status;
+        $table->save();
+        return redirect()->route('table.index')
+            ->with('success','New Table Created successfully');
     }
 
     /**
@@ -55,9 +79,10 @@ class TableController extends Controller
      * @param  \App\Table  $table
      * @return \Illuminate\Http\Response
      */
-    public function edit(Table $table)
+    public function edit($id)
     {
-        //
+        $table = Table::findOrFail($id);
+        return view('table.edit', compact('table'));
     }
 
     /**
@@ -67,9 +92,25 @@ class TableController extends Controller
      * @param  \App\Table  $table
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Table $table)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'table_no' => 'required|numeric',
+            'name' => 'required',
+            'status' => 'required'
+        ]);
+        $input = $request->all();
+        $status = false;
+        if($input['status'] == 'Enable'){
+            $status = true;
+        }
+        $table = Table::findOrFail($id);
+        $table->table_no = $input['table_no'];
+        $table->table_name = $input['name'];
+        $table->status = $status;
+        $table->save();
+        return redirect()->route('table.index')
+            ->with('success','Table Updated successfully');
     }
 
     /**

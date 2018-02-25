@@ -41,3 +41,10 @@ Route::patch('/menu/edit/{id}', 'MenuController@update')->name('menu.update');
 /*Stock  related routes*/
 Route::get('/stock', 'StockController@index')->name('stock.index');
 Route::post('/stock', 'StockController@store')->name('stock.store');
+
+/*Table Related routes*/
+Route::get('/table', 'TableController@index')->name('table.index');
+Route::post('/table', 'TableController@store')->name('table.store');
+Route::get('/table/edit/{id}', 'TableController@edit')->name('table.edit');
+Route::patch('/table/edit/{id}', 'TableController@update')->name('table.update');
+
