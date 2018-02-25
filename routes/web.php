@@ -37,3 +37,7 @@ Route::get('/menu', 'MenuController@index')->name('menu.index');
 Route::post('/menu', 'MenuController@store')->name('menu.store');
 Route::get('/menu/edit/{id}', 'MenuController@edit')->name('menu.edit');
 Route::patch('/menu/edit/{id}', 'MenuController@update')->name('menu.update');
+
+/*Stock  related routes*/
+Route::get('/stock', 'StockController@index')->name('stock.index');
+Route::post('/stock', 'StockController@store')->name('stock.store');

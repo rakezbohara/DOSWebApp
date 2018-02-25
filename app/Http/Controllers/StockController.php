@@ -14,7 +14,8 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $stocks = Stock::all();
+        return view('stock.index',compact('stocks'));
     }
 
     /**
@@ -35,7 +36,16 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'stock_id' => 'required',
+            'quantity' => 'required|numeric'
+        ]);
+        $input = $request->all();
+        $stock = Stock::find($input['stock_id']);
+        $stock->qty = $input['quantity'];
+        $stock->save();
+        return redirect()->route('stock.index')
+            ->with('success','Stock Updated successfully');
     }
 
     /**

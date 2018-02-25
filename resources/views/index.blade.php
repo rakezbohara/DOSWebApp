@@ -86,7 +86,9 @@
         <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
         <li><a href={{ route('user.index') }}><i class="fa fa-user"></i> <span>Users</span></a></li>
         <li><a href={{ route('category.index') }}><i class="fa fa-sitemap"></i> <span>Category</span></a></li>
-        <li><a href={{ route('menu.index') }}><i class="fa  fa-coffee"></i> <span>Menu</span></a></li>
+        <li><a href={{ route('menu.index') }}><i class="fa fa-coffee"></i> <span>Menu</span></a></li>
+        <li><a href={{ route('stock.index') }}><i class="fa fa-hdd-o"></i> <span>Stocks</span></a></li>
+        <li><a href={{ route('table.index') }}><i class="fa fa-table"></i> <span>Table</span></a></li>
         <li class="header">REPORTS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>REPORT GENERATOR</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>STOCKS</span></a></li>
