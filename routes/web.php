@@ -11,7 +11,11 @@
 |
 */
 
+//Dashboard Related Routed
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/checkoutTable/{id}', 'HomeController@checkoutTable')->name('checkoutTable');
+Route::get('/editorder/{id}', 'HomeController@editOrder')->name('editorder');
+Route::get('/deleteOrder/{id}', 'HomeController@deleteOrder')->name('deleteOrder');
 
 Route::get('/logout','Auth\LoginController@logout');
 

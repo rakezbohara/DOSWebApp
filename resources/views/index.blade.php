@@ -65,7 +65,7 @@
         <ul class="nav navbar-nav">
           <!-- Control Sidebar Toggle Button -->
           <li>
-            <a href="#"><i class="fa fa-gears"></i></a>
+            <a href="{{ route('logout') }}"><i class="fa fa-gears"></i></a>
           </li>
         </ul>
       </div>
@@ -78,17 +78,46 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-          </a>
-        </li>
-        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
-        <li><a href={{ route('user.index') }}><i class="fa fa-user"></i> <span>Users</span></a></li>
-        <li><a href={{ route('category.index') }}><i class="fa fa-sitemap"></i> <span>Category</span></a></li>
-        <li><a href={{ route('menu.index') }}><i class="fa fa-coffee"></i> <span>Menu</span></a></li>
-        <li><a href={{ route('stock.index') }}><i class="fa fa-hdd-o"></i> <span>Stocks</span></a></li>
-        <li><a href={{ route('table.index') }}><i class="fa fa-table"></i> <span>Table</span></a></li>
+        @if($view_name== 'dashboard' || $view_name == 'editorder')
+          <li class="active treeview">
+            <a href={{ route('home') }}>
+              <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+            </a>
+          </li>
+        @else
+          <li class="treeview">
+            <a href={{ route('home') }}>
+              <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+            </a>
+          </li>
+        @endif
+
+        @if($view_name == 'users-index' || $view_name == 'users-edit')
+          <li class="active treeview"><a href={{ route('user.index') }}><i class="fa fa-user"></i> <span>Users</span></a></li>
+        @else
+          <li><a href={{ route('user.index') }}><i class="fa fa-user"></i> <span>Users</span></a></li>
+        @endif
+
+        @if($view_name == 'category-index' || $view_name == 'category-edit')
+          <li class="active treeview"><a href={{ route('category.index') }}><i class="fa fa-sitemap"></i> <span>Category</span></a></li>
+        @else
+          <li><a href={{ route('category.index') }}><i class="fa fa-sitemap"></i> <span>Category</span></a></li>
+        @endif
+        @if($view_name == 'menu-index' || $view_name == 'menu-edit')
+          <li class="active treeview"><a href={{ route('menu.index') }}><i class="fa fa-coffee"></i> <span>Menu</span></a></li>
+        @else
+          <li><a href={{ route('menu.index') }}><i class="fa fa-coffee"></i> <span>Menu</span></a></li>
+        @endif
+        @if($view_name == 'stock-index')
+          <li class="active treeview"><a href={{ route('stock.index') }}><i class="fa fa-hdd-o"></i> <span>Stocks</span></a></li>
+        @else
+          <li><a href={{ route('stock.index') }}><i class="fa fa-hdd-o"></i> <span>Stocks</span></a></li>
+        @endif
+        @if($view_name == 'table-index' || $view_name == 'table-edit')
+          <li class="active treeview"><a href={{ route('table.index') }}><i class="fa fa-table"></i> <span>Table</span></a></li>
+        @else
+          <li><a href={{ route('table.index') }}><i class="fa fa-table"></i> <span>Table</span></a></li>
+        @endif
         <li class="header">REPORTS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>REPORT GENERATOR</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>STOCKS</span></a></li>
