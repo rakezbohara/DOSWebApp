@@ -138,7 +138,7 @@
                             @endif
                         </td>
                         <td>
-                            @if($category->status)
+                            @if($menu->status)
                                 Enable
                             @else
                                 Disable

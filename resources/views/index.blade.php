@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
+
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{asset('admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
   <!-- DataTables -->
@@ -80,15 +81,11 @@
         <li class="header">MAIN NAVIGATION</li>
         @if($view_name== 'dashboard' || $view_name == 'editorder')
           <li class="active treeview">
-            <a href={{ route('home') }}>
-              <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-            </a>
+            <a href={{ route('home') }}> <i class="fa fa-dashboard"></i> <span>Dashboard</span> </a>
           </li>
         @else
-          <li class="treeview">
-            <a href={{ route('home') }}>
-              <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-            </a>
+          <li>
+            <a href={{ route('home') }}> <i class="fa fa-dashboard"></i> <span>Dashboard</span> </a>
           </li>
         @endif
 
@@ -119,7 +116,11 @@
           <li><a href={{ route('table.index') }}><i class="fa fa-table"></i> <span>Table</span></a></li>
         @endif
         <li class="header">REPORTS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>REPORT GENERATOR</span></a></li>
+        @if($view_name == 'reports-report')
+          <li class="active treeview"><a href="{{ route('record.index') }}"><i class="fa fa-circle-o text-red"></i> <span>REPORT GENERATOR</span></a></li>
+        @else
+          <li><a href="{{ route('record.index') }}"><i class="fa fa-circle-o text-red"></i> <span>REPORT GENERATOR</span></a></li>
+        @endif
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>STOCKS</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>LOGS</span></a></li>
       </ul>
@@ -184,6 +185,10 @@
 <!-- daterangepicker -->
 <script src="{{asset('admin/bower_components/moment/min/moment.min.js')}}"></script>
 <script src="{{asset('admin/bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<!-- InputMask -->
+<script src="{{ asset('admin/plugins/input-mask/jquery.inputmask.js') }}"></script>
+<script src="{{ asset('admin/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+<script src="{{ asset('admin/plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
 <!-- datepicker -->
 <script src="{{asset('admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 <!-- Bootstrap WYSIHTML5 -->
@@ -212,6 +217,34 @@
             'info'        : true,
             'autoWidth'   : false
         })
+    })
+</script>
+<script>
+    $(function () {
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges   : {
+                    'Today'       : [moment(), moment()],
+                    'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate  : moment()
+            },
+            function (start, end) {
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                document.getElementById("startDate").value = start.format('YYYY-MM-DD');;
+                document.getElementById("endDate").value = end.format('YYYY-MM-DD');
+            }
+        )
     })
 </script>
 </body>

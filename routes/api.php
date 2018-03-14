@@ -18,3 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 //Login
 Route::post('/login','APIController@login');
+Route::get('/tables','APIController@getTables');
+Route::get('/menus', 'APIController@getMenus');
+Route::get('/categories', 'APIController@getCategories');
+
+Route::post('/order', 'APIController@postOrder');
+Route::post('/checkout', 'APIController@postCheckout');

@@ -42,7 +42,7 @@ class StockController extends Controller
         ]);
         $input = $request->all();
         $stock = Stock::find($input['stock_id']);
-        $stock->qty = $input['quantity'];
+        $stock->qty = $input['quantity']+$stock->qty;
         $stock->save();
         return redirect()->route('stock.index')
             ->with('success','Stock Updated successfully');

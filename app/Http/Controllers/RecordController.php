@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Record;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RecordController extends Controller
@@ -14,7 +15,11 @@ class RecordController extends Controller
      */
     public function index()
     {
-        //
+        $endDate = Carbon::now()->addDay();
+        /*For productoin make start date 7 days earlier than now() by subDays(7)*/
+        $startDate = Carbon::now()->subMonth();
+        $reports = Record::whereBetween('created_at', [$startDate, $endDate])->get();
+        return view('reports.report',compact('reports'));
     }
 
     /**
@@ -25,6 +30,19 @@ class RecordController extends Controller
     public function create()
     {
         //
+    }
+
+    public function search(Request $request){
+        $this->validate($request,[
+            'menu_type' => 'required',
+            'startDate' => 'required|date',
+            'endDate' => 'required|date'
+        ]);
+        $input = $request->all();
+        $startDate = Carbon::parse($input['startDate']);
+        $endDate = Carbon::parse($input['endDate'])->addDay();
+        $reports = Record::whereBetween('created_at', [$startDate, $endDate])->get();
+        return view('reports.report',compact('reports'));
     }
 
     /**

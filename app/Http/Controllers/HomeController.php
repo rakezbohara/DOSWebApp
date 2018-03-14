@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Record;
+use App\Stock;
 use App\Table;
 use App\Order;
 use Illuminate\Http\Request;
@@ -41,6 +42,13 @@ class HomeController extends Controller
     public function checkoutTable($id){
         $orders = Order::where('table_id',$id)->get();
         foreach ($orders as $order){
+            /*Reducing item stock if menu item is stockable*/
+            if($order->menu->stockable){
+                $stock = $order->menu->stock;
+                $stock->qty = $stock->qty - $order->qty;
+                $stock->save();
+            }
+            /*Saving data to record for reporting*/
             $record = new Record();
             $record->menu_id = $order->menu_id;
             $record->qty = $order->qty;

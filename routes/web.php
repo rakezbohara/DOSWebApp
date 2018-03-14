@@ -52,3 +52,7 @@ Route::post('/table', 'TableController@store')->name('table.store');
 Route::get('/table/edit/{id}', 'TableController@edit')->name('table.edit');
 Route::patch('/table/edit/{id}', 'TableController@update')->name('table.update');
 
+/*Report related routes*/
+Route::get('/report', 'RecordController@index')->name('record.index');
+Route::post('/search', 'RecordController@search')->name('record.search');
+
