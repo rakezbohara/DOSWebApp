@@ -55,4 +55,10 @@ Route::patch('/table/edit/{id}', 'TableController@update')->name('table.update')
 /*Report related routes*/
 Route::get('/report', 'RecordController@index')->name('record.index');
 Route::post('/search', 'RecordController@search')->name('record.search');
+Route::get('/stockreport', 'StockController@report')->name('stock.report');
+Route::post('/stocksearch', 'StockController@search')->name('stock.search');
+
+
+/*Print From thermal printer*/
+Route::get('/print', 'PrintController@printTest')->name('print');
 

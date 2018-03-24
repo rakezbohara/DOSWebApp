@@ -121,7 +121,11 @@
         @else
           <li><a href="{{ route('record.index') }}"><i class="fa fa-circle-o text-red"></i> <span>REPORT GENERATOR</span></a></li>
         @endif
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>STOCKS</span></a></li>
+        @if($view_name == 'reports-stock')
+          <li><a href="{{ route('stock.report') }}"><i class="fa fa-circle-o text-yellow"></i> <span>STOCKS</span></a></li>
+        @else
+          <li><a href="{{ route('stock.report') }}"><i class="fa fa-circle-o text-yellow"></i> <span>STOCKS</span></a></li>
+        @endif
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>LOGS</span></a></li>
       </ul>
     </section>

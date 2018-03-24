@@ -25,7 +25,7 @@
 
 <div class="box box-primary margin-10px">
     <div class="box-header with-border">
-        <h3 class="box-title">Report Generation on the based of date</h3>
+        <h3 class="box-title">Sales Report Generation on the based of date</h3>
     </div>
     <!-- /.box-header -->
     <!-- form start -->

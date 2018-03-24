@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Stock;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
@@ -47,6 +48,30 @@ class StockController extends Controller
         return redirect()->route('stock.index')
             ->with('success','Stock Updated successfully');
     }
+
+    public function report()
+    {
+        $endDate = Carbon::now()->addDay();
+        /*For productoin make start date 7 days earlier than now() by subDays(7)*/
+        $startDate = Carbon::now()->subMonth();
+        $reports = Stock::whereBetween('created_at', [$startDate, $endDate])->get();
+        //return $reports;
+        return view('reports.stock',compact('reports'));
+    }
+
+    public function search(Request $request){
+        $this->validate($request,[
+            'menu_type' => 'required',
+            'startDate' => 'required|date',
+            'endDate' => 'required|date'
+        ]);
+        $input = $request->all();
+        $startDate = Carbon::parse($input['startDate']);
+        $endDate = Carbon::parse($input['endDate'])->addDay();
+        $reports = Stock::whereBetween('created_at', [$startDate, $endDate])->get();
+        return view('reports.stock',compact('reports'));
+    }
+
 
     /**
      * Display the specified resource.
