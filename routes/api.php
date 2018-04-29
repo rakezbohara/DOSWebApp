@@ -22,5 +22,14 @@ Route::get('/tables','APIController@getTables');
 Route::get('/menus', 'APIController@getMenus');
 Route::get('/categories', 'APIController@getCategories');
 
+//updated api for get order
+Route::get('/order/{id}','APIController@getOrder');
+
 Route::post('/order', 'APIController@postOrder');
 Route::post('/checkout', 'APIController@postCheckout');
+
+//updated
+Route::get('/tabledetails/{id}','APIController@tabledetails');
+Route::post('/changedeliverstatus','APIController@changedeliverstatus');
+
+Route::post('/ajaxpost','DateTimeController@ajaxpost');

@@ -36,9 +36,9 @@
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-industry"></i></span>
                 <select class="form-control" name="menu_type">
-                    <option>--ALL--</option>
-                    <option>KOT</option>
-                    <option>BOT</option>
+                    <option value="0">--ALL--</option>
+                    <option value="1">KOT</option>
+                    <option value="2">BOT</option>
                 </select>
             </div>
         </div>
@@ -68,6 +68,7 @@
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Sales Report</h3>
+        <h3 class="boxd-title">Total Collection : Rs. {{$total}} /-</h3>
     </div>
     <!-- /.box-header -->
     <div class="box-body">

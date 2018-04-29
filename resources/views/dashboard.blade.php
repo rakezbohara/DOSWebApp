@@ -4,7 +4,24 @@
     <div class="row margin-left-40px">
         {{--Table for checkout--}}
         <h2 class="page-header">Checkout Requests</h2>
+        
+            @if($errors->any())
+                <div class="col-md3">
+                    <div class="alert alert-danger" role="alert">
+                        @foreach ($errors->all() as $error)
+                            <ul>
+                                <li>{{ $error }}</li>
+                            </ul>
+                            
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+                    
+        
         @foreach($tableWaiting as $table)
+                    
+            
             <div class="col-md-3">
                 <div class="box box-warning">
                     <div class="box-header with-border">
@@ -19,14 +36,24 @@
                                 <th>Quantity</th>
                                 <th>Price</th>
                             </tr>
-                            @foreach($table->orders as $order)
+                            @php $total = 0 @endphp
+                            @foreach($table->orders as $key => $order)
+                                @php $total += $order->menu->price * $order->qty @endphp
                                 <tr>
-                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $key + 1}}</td>
                                     <td>{{ $order->menu->name }}</td>
                                     <td>{{ $order->qty }}</td>
                                     <td><span class="badge bg-red">{{ $order->menu->price }}</span></td>
                                 </tr>
                             @endforeach
+                            <tr>
+                                <td>#</td>
+                                <td colspan="2">Total</td>
+                                <td>{{$total}}</td>
+                                 @php $total1 = $total * 0.1 @endphp
+                                
+                            </tr>
+                            
                         </table>
                     </div>
                     <!-- /.box-body -->
@@ -46,11 +73,26 @@
                         </div>
                         <div class="modal-body">
                             <p>Do you want to make Table No. {{ $table->table_no }} free?</p>
+                            <form action="{{route('checkoutTable',$table->id)}}" method="POST">
+                                {{ csrf_field() }}
+                                
+                                <label class="">service charge</label>
+                                <input class="form-control" type="text" name="service_charge" value="{{ $total1 }}">
+                                
+                                <label class="">Discount amount</label>
+                                <input class="form-control" type="text" name="discount" value="0">
+
+
+
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
+
+                                    <button type="submit" class="btn btn-outline">Checkout</button>
+                                </div>
+                                
+                            </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
-                            <a href="{{ route('checkoutTable', $table->id) }}"><button type="button" class="btn btn-outline">Confirm</button></a>
-                        </div>
+                        
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -90,6 +132,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer bg-red">
+                         <a href="{{ route('changetablestatus', $table->id) }}"> <button type="submit" class="btn btn-primary pull-left">Checkout</button></a>
                         <a href="{{ route('editorder', $table->id) }}"> <button type="submit" class="btn btn-warning pull-right">Edit</button></a>
                     </div>
                     <!-- /.box-footer -->

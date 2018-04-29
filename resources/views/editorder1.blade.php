@@ -4,10 +4,11 @@
 
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Edit Order for Table No. {{ $table->table_no }}</h3>
+            <h3 class="box-title">Edit Order for Table No. </h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+            
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -20,20 +21,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($table->order as $order)
                     <tr>
-                        <td>{{$order->id}}</td>
-                        <td>{{$order->menu->name}}</td>
-                        <td>{{$order->qty}}</td>
-                        <td>{{$order->menu->price}}</td>
-                        <td>{{$order->note}}</td>
-                        <td><div class="timeline-footer">
-                                <a href="{{ route('show',$order->id)}}" class="btn btn-primary btn-xs">Edit Order</a>
-                                <a href="{{ route('deleteOrder', $order->id) }}" class="btn btn-danger btn-xs">Delete Order</a>
-                            </div>
-                        </td>
+                        <form action="{{ route('updateorder') }}" method="POST">
+                            {{ csrf_field() }}
+                        <td><input type="text" name="order_id"value="{{$order->id or ''}}" /></td>
+                        <td><input type="text" name="menu_name"value="{{$order->menu->name or ''}}"/></td>
+                        <td><input type="text" name="qty" value="{{$order->qty or ''}}"/></td>
+                        <td><input type="text" name="price" value="{{$order->menu->price or ''}}"/></td>
+                        <td><input type="text" name="note" value="{{$order->note or ''}}"/></td>
+                        <td><input type="submit" value="Update Order" class="btn btn-primary btn-xs"/>
+
+                        </form>
+
                     </tr>
-                @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
@@ -46,7 +46,8 @@
                 </tr>
                 </tfoot>
             </table>
-        </div>
+            </div>
+        
         <!-- /.box-body -->
     </div>
     <!-- /.box -->

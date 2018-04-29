@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('menu_id');
             $table->integer('qty');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->integer('table_id');
             $table->timestamps();
         });

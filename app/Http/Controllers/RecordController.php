@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Record;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Transaction;
 
 class RecordController extends Controller
 {
@@ -19,7 +20,9 @@ class RecordController extends Controller
         /*For productoin make start date 7 days earlier than now() by subDays(7)*/
         $startDate = Carbon::now()->subMonth();
         $reports = Record::whereBetween('created_at', [$startDate, $endDate])->get();
-        return view('reports.report',compact('reports'));
+        $total = Transaction::whereBetween('created_at',[$startDate, $endDate])->sum('total');
+        return view('reports.report',compact('reports'))
+        ->with('total',$total);
     }
 
     /**
@@ -41,8 +44,19 @@ class RecordController extends Controller
         $input = $request->all();
         $startDate = Carbon::parse($input['startDate']);
         $endDate = Carbon::parse($input['endDate'])->addDay();
-        $reports = Record::whereBetween('created_at', [$startDate, $endDate])->get();
-        return view('reports.report',compact('reports'));
+        if($input['menu_type'] == 0){
+             $reports = Record::whereBetween('created_at', [$startDate, $endDate])
+        ->get();
+        }
+        else{
+             $reports = Record::whereBetween('created_at', [$startDate, $endDate])->get()->filter(function($value, $key) use($input){
+            return $value->menu->category_id == $input['menu_type'];
+        });     
+        }
+       
+        $total = Transaction::whereBetween('created_at',[$startDate, $endDate])->sum('total');
+        return view('reports.report',compact('reports'))
+        ->with('total',$total);
     }
 
     /**

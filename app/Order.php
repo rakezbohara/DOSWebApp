@@ -13,4 +13,7 @@ class Order extends Model
     public function table(){
         return $this->belongsTo('App\Table');
     }
+    public function delivery_status(){
+        return $this->hasOne('App\DeliveryStatus','order_id');
+    }
 }

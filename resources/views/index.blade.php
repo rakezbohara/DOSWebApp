@@ -32,6 +32,8 @@
   <link rel="stylesheet" href="{{asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
+  
+  <script src="{{asset('js/ajax_jquery.min.js')}}"></script>
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -49,11 +51,11 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="{{route('home')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>P</b>OS</span>
+      <span class="logo-mini"><b>G</b>TF</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>POS</b>System</span>
+      <span class="logo-lg"><b>Gandaki Trout</b> Farm</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -127,6 +129,7 @@
           <li><a href="{{ route('stock.report') }}"><i class="fa fa-circle-o text-yellow"></i> <span>STOCKS</span></a></li>
         @endif
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>LOGS</span></a></li>
+        <li><a href="viewtransaction"><i class="fa fa-circle-o text-aqua"></i> <span>view bill</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -210,6 +213,13 @@
 <!-- DataTables -->
 <script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<!-- chart.js for chart -->
+<script src="{{asset('admin/bower_components/chart.js/Chart.js')}}"></script>
+<script src="{{asset('admin/bower_components/chart.js/Chart.min.js')}}"></script>
+
+
+
+
 <script>
     $(function () {
         $('#example1').DataTable()
@@ -251,5 +261,6 @@
         )
     })
 </script>
+
 </body>
 </html>
